@@ -54,10 +54,12 @@ class Command(BaseCommand):
 
     def migrate_fields(self, model_name, field_names):
         model = this_django.get_model(model_name)
-        queryset = queryset_iterator(model._base_manager.all())
+        queryset = model._base_manager.all()
+        instances = queryset_iterator(queryset)
 
         if Bar is not None:
-            queryset = with_progress_bar(queryset, message=model_name)
+            instances = with_progress_bar(
+                instances, message=model_name, total=queryset.count())
 
-        for instance in queryset:
+        for instance in instances:
             instance.save(update_fields=field_names)
