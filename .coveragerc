@@ -1,0 +1,7 @@
+[run]
+source = abnorm
+
+[report]
+omit =
+    abnorm/contrib.py
+    abnorm_tests/
