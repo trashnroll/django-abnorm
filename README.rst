@@ -1,6 +1,10 @@
 django-abnorm
 =============
 
+.. image:: https://travis-ci.org/trashnroll/django-abnorm.svg?branch=master
+    :alt: Build Status
+    :target: https://travis-ci.org/trashnroll/django-abnorm
+
 Abnorm is a django denormalization toolkit.
 
 It provides a set of extra model fields to ease the implementation of some typical denormalization scenarios by elimination of handwritten boilerplate code.
