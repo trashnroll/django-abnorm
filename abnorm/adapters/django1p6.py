@@ -1,7 +1,5 @@
 import sys
 
-from funcy import first
-
 from django.db import models
 from django.db.models.loading import get_model
 from django.contrib.contenttypes.generic import (
@@ -118,11 +116,11 @@ class SpecificDjango(EveryDjango):
         elif isinstance(rf, ManyToManyField):
             return rf.related.get_accessor_name()
         elif isinstance(rf, GenericRelation):
-            return first([
+            return next(iter([
                 f for f in self.get_model_fields(
                     descriptor.field.rel.to)
                 if self._is_matching_generic_foreign_key(descriptor.field, f)
-            ]).name
+            ]), None).name
 
     def get_model(self, app_label, model_name=None):
         if model_name is None:

@@ -1,6 +1,6 @@
 import gc
 
-from funcy import distinct, group_values
+from collections import defaultdict
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -47,8 +47,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # django 1.6/1.7 takes cmd args as `args`, 1.8+ as `options`
         # sum their values to support both ways
-        fields = distinct(list(args) + options.get('field', []))
-        groups = group_values(f.rsplit('.', 1) for f in fields)
+        fields = set(list(args) + options.get('field', []))
+        groups = defaultdict(list)
+        for f in fields:
+            splitted_field = f.rsplit('.', 1)
+            groups[splitted_field[0]].extend(splitted_field[1:])
         for model_name, field_names in groups.items():
             self.migrate_fields(model_name, field_names)
 

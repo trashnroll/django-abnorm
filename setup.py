@@ -7,7 +7,6 @@ README = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.rst')
 
 DEPENDENCIES = [
     'django >=1.6, <2.2',
-    'funcy',
 ]
 
 

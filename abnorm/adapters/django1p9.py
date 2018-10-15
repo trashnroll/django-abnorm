@@ -1,5 +1,3 @@
-from funcy import first
-
 from .django1p8 import SpecificDjango as Django1p8
 
 
@@ -100,8 +98,8 @@ class SpecificDjango(Django1p8):
         elif isinstance(rf, ManyToManyField):
             return rf.remote_field.get_accessor_name()
         elif isinstance(rf, GenericRelation):
-            return first([
+            return next(iter([
                 f for f in self.get_model_fields(
                     descriptor.field.related_model)
                 if self._is_matching_generic_foreign_key(descriptor.field, f)
-            ]).name
+            ]), None).name
