@@ -63,6 +63,16 @@ class FKRelationTestCase(TestCase):
         self.assertEqual(self.test_obj.rto_items_qsf_count, 1)
         self.assertEqual(self.test_obj2.rto_items_qsf_count, 1)
 
+    def test_count_field_with_qs_filter_as_q_instance_value_change(self):
+        self.fm5 = RelatedTestObj.objects.create(
+            value=1, test_obj=self.test_obj)
+        self.test_obj = reload_model_instance(self.test_obj)
+        self.assertEqual(self.test_obj.rto_items_qsfq_count, 2)
+        self.fm5.value = 666
+        self.fm5.save()
+        self.test_obj = reload_model_instance(self.test_obj)
+        self.assertEqual(self.test_obj.rto_items_qsfq_count, 1)
+
     def test_sum_field(self):
         self.assertEqual(self.test_obj.rto_item_values_sum, 7)
 

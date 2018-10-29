@@ -44,6 +44,7 @@ class TestObj(BaseModel):
         'relatedtestobj_set', 'value')
     rto_items_count = CountField('rto_items')
     rto_items_qsf_count = CountField('rto_items', qs_filter={'value': 1})
+    rto_items_qsfq_count = CountField('rto_items', qs_filter=models.Q(value=1))
     rto_first_item = RelationField(
         'rto_items', fields=('id', 'value', 'test_obj_id'), limit=1, flat=True)
     rto_first_2_items = RelationField(
