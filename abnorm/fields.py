@@ -44,15 +44,14 @@ class DenormalizedFieldMixin(object):
         if not relation_name:
             raise ValueError('relation_name cannot be empty.')
         self.relation_name = relation_name
-        self.filter = Q()
-        if qs_filter:
-            if isinstance(qs_filter, dict):
-                for key, value in qs_filter.items():
-                    self.filter &= Q(**{key: value})
-            elif isinstance(qs_filter, Q):
-                self.filter = qs_filter
-            else:
-                raise ValueError('qs_filter must be Q or dict')
+        if qs_filter is None:
+            self.filter = Q()
+        elif isinstance(qs_filter, dict):
+            self.filter = Q(**qs_filter)
+        elif isinstance(qs_filter, Q):
+            self.filter = qs_filter
+        else:
+            raise ValueError('qs_filter must be Q or dict')
         super(DenormalizedFieldMixin, self).__init__(
             null=null, blank=blank, **kwargs)
 
