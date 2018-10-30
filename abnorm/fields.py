@@ -4,7 +4,7 @@ from functools import wraps, partial
 
 import django
 from django.db import models
-from django.db.models import Sum, Avg
+from django.db.models import Sum, Avg, Q
 from django.db.models.fields.files import FieldFile
 from django.db.models.signals import (
     pre_save, post_save, post_delete, post_init, m2m_changed, Signal)
@@ -41,9 +41,17 @@ def init_model(model, data):
 class DenormalizedFieldMixin(object):
     def __init__(self, relation_name=None, null=True, blank=True,
                  qs_filter=None, **kwargs):
-        assert relation_name
+        if not relation_name:
+            raise ValueError('relation_name cannot be empty.')
         self.relation_name = relation_name
-        self.filter = qs_filter or {}
+        if qs_filter is None:
+            self.filter = Q()
+        elif isinstance(qs_filter, dict):
+            self.filter = Q(**qs_filter)
+        elif isinstance(qs_filter, Q):
+            self.filter = qs_filter
+        else:
+            raise ValueError('qs_filter must be Q or dict')
         super(DenormalizedFieldMixin, self).__init__(
             null=null, blank=blank, **kwargs)
 
@@ -76,7 +84,7 @@ class DenormalizedFieldMixin(object):
     def get_related_queryset(self, instance=None, relation=None):
         if relation is None:
             relation = getattr(instance, self.relation_name)
-        return relation.filter(**self.filter)
+        return relation.filter(self.filter)
 
     def patch_instance_prepare_database_save(self, sender, instance, **kwargs):
         # see `django.db.models.sql.compiler.SQLUpdateCompiler.as_sql` for
