@@ -78,7 +78,7 @@ Fields
 
 The following arguments are available to all field types:
     - `relation_name` - points to the denormalized data source accessor
-    - `qs_filter` - takes a dict with extra filtration parameters for the related data queryset
+    - `qs_filter` - takes a dict or Q with extra filtration parameters for the related data queryset
 
 CountField
 ^^^^^^^^^^
