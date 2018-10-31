@@ -13,7 +13,7 @@ from django.utils import six
 from django.core.exceptions import ObjectDoesNotExist
 
 from .adapters import this_django, south
-from .utils import get_model_name, dumps, loads
+from .utils import get_model_name, dumps, loads, first
 from . import state
 
 
@@ -138,7 +138,7 @@ class DenormalizedFieldMixin(object):
                 ),
                 this_django.get_model_fields(rel_model)
             )
-            related_field = next(iter(generic_fk_fields), None)
+            related_field = first(generic_fk_fields)
             related_field_name = getattr(related_field, 'name', None)
         else:
             related_field_name = descriptor_field.name

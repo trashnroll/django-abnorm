@@ -24,3 +24,7 @@ def loads(txt):
         encoding=settings.DEFAULT_CHARSET
     )
     return value
+
+
+def first(iterable):
+    return next(iter(iterable), None)
