@@ -126,11 +126,10 @@ class SpecificDjango(EveryDjango):
         elif isinstance(rf, ManyToManyField):
             return rf.related.get_accessor_name()
         elif isinstance(rf, GenericRelation):
-            return next(iter([
-                f for f in self.get_model_fields(
-                    descriptor.field.rel.to)
+            return [
+                f for f in self.get_model_fields(descriptor.field.rel.to)
                 if self._is_matching_generic_foreign_key(descriptor.field, f)
-            ]), None).name
+            ][0].name
 
     def _is_matching_generic_foreign_key(self, descriptor_field, field):
         """
