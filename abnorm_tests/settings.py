@@ -25,11 +25,7 @@ SECRET_KEY = '0'
 ROOT_URLCONF = 'abnorm_tests.urls'
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
     'abnorm',
     'abnorm_tests',
 )
