@@ -6,7 +6,7 @@ README = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.rst')
 
 
 DEPENDENCIES = [
-    'django >=1.6, <2.2',
+    'django >=1.6, <2.3',
     'funcy',
 ]
 
@@ -36,6 +36,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Software Development',
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Framework :: Django",
@@ -47,6 +48,7 @@ setup(
         "Framework :: Django :: 1.11",
         "Framework :: Django :: 2.0",
         "Framework :: Django :: 2.1",
+        "Framework :: Django :: 2.2",
         "Environment :: Web Environment",
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
