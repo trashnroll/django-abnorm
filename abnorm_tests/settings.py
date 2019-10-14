@@ -27,7 +27,7 @@ ROOT_URLCONF = 'abnorm_tests.urls'
 INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'abnorm',
-    'abnorm_tests',
+    'abnorm_tests.tests',
 )
 
 

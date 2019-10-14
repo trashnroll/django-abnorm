@@ -31,9 +31,6 @@ class TestParentObj(BaseModel):
         'test_objs', fields=('id', 'm2m_first_2_items', 'm2m_first_item'),
         limit=1, flat=True)
 
-    class Meta:
-        app_label = 'abnorm'
-
 
 class TestObj(BaseModel):
     parent = models.ForeignKey(
@@ -57,7 +54,7 @@ class TestObj(BaseModel):
     nrto_first_2_items = RelationField(
         'nrto_items', fields=('id', 'value'), limit=2)
 
-    grto_items = generic.GenericRelation('abnorm.GenericRelatedTestObj')
+    grto_items = generic.GenericRelation('GenericRelatedTestObj')
     grto_item_values_sum = SumField('grto_items', 'value')
     grto_items_count = CountField('grto_items')
     grto_first_item = RelationField(
@@ -76,9 +73,6 @@ class TestObj(BaseModel):
     first_non_ordered = RelationField(
         'non_ordereds', fields=('id', 'value'), limit=1, flat=True)
 
-    class Meta:
-        app_label = 'abnorm'
-
 
 class NonOrderedModel(BaseModel):
 
@@ -92,7 +86,6 @@ class NonOrderedModel(BaseModel):
         forces queryset ordering for models without default one.
         So we have to test unordered models too.
         """
-        app_label = 'abnorm'
         ordering = None
 
 
@@ -104,7 +97,6 @@ class RelatedTestObj(BaseModel):
         TestObj, on_delete=models.CASCADE, null=True)
 
     class Meta:
-        app_label = 'abnorm'
         ordering = ('id',)
 
 
@@ -115,7 +107,6 @@ class NullRelatedTestObj(BaseModel):
     )
 
     class Meta:
-        app_label = 'abnorm'
         ordering = ('id',)
 
 
@@ -129,7 +120,6 @@ class GenericRelatedTestObj(BaseModel):
         'm2m_items', fields=('id', 'value'), limit=1, flat=True)
 
     class Meta:
-        app_label = 'abnorm'
         ordering = ('id',)
 
 
@@ -137,5 +127,4 @@ class M2MTestObj(BaseModel):
     value = models.IntegerField(default=0)
 
     class Meta:
-        app_label = 'abnorm'
         ordering = ('id',)

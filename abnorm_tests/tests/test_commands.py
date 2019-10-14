@@ -47,7 +47,7 @@ class UpdateFieldsCommandTestCase(TestCase):
             # run update fields command
             call_command(
                 'update_abnorm_fields',
-                'abnorm.TestObj.{}_first_item'.format(relation),
+                'tests.TestObj.{}_first_item'.format(relation),
             )
 
             # ensure our data is updated
@@ -63,7 +63,7 @@ class UpdateFieldsCommandTestCase(TestCase):
         # run update fields command
         call_command(
             'update_abnorm_fields',
-            'abnorm.TestObj.m2m_first_item',
+            'tests.TestObj.m2m_first_item',
         )
 
         # post_update signal fired
@@ -84,8 +84,8 @@ class UpdateFieldsCommandTestCase(TestCase):
         # this DOES NOT update nrto field
         call_command(
             'update_abnorm_fields',
-            'abnorm.TestObj.rto_first_item',
-            'abnorm.TestObj.grto_first_item',
+            'tests.TestObj.rto_first_item',
+            'tests.TestObj.grto_first_item',
         )
 
         self.test_obj = reload_model_instance(self.test_obj)
