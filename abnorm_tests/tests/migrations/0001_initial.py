@@ -32,6 +32,9 @@ class Migration(migrations.Migration):
                 ('first_test_obj', abnorm.fields.RelationField(blank=True, default=None, fields=('id', 'm2m_first_2_items', 'm2m_first_item'), flat=True, limit=1, null=True, relation_name='test_objs')),
                 ('parent', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='tests.TestParentObj')),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='TestObj',
@@ -60,6 +63,9 @@ class Migration(migrations.Migration):
                 ('m2m_items', models.ManyToManyField(to='tests.M2MTestObj')),
                 ('parent', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='test_objs', to='tests.TestParentObj')),
             ],
+            options={
+                'abstract': False,
+            },
         ),
         migrations.CreateModel(
             name='RelatedTestObj',
@@ -93,6 +99,17 @@ class Migration(migrations.Migration):
             ],
             options={
                 'ordering': None,
+            },
+        ),
+        migrations.CreateModel(
+            name='IgnoredTestObj',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('m2m_item_values_sum', abnorm.fields.SumField(blank=True, default=0, field_name='value', internal_type=django.db.models.fields.IntegerField, null=True, relation_name='m2m_items')),
+                ('m2m_items', models.ManyToManyField(to='tests.M2MTestObj')),
+            ],
+            options={
+                'ordering': ('id',),
             },
         ),
         migrations.CreateModel(
