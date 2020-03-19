@@ -32,3 +32,7 @@ INSTALLED_APPS = (
 
 
 MIDDLEWARE_CLASSES = ()
+
+ABNORM_IGNORE_MODELS = [
+    'tests.IgnoredTestObj',
+]

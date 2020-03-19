@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from .models import (
     TestObj, RelatedTestObj, NullRelatedTestObj, GenericRelatedTestObj,
-    M2MTestObj, TestParentObj,
+    M2MTestObj, TestParentObj, IgnoredTestObj,
 )
 
 from abnorm.utils import reload_model_instance
@@ -612,3 +612,14 @@ class DropCascadeTestCase(TestCase):
     def test_doesnt_fail_on_broken_refs(self):
         # see DenormalizedFieldMixin.update_value_by try/except block comments
         self.parent.delete()
+
+
+class IgnoredModelTestCase(TestCase):
+    def setUp(self):
+        self.test_obj = IgnoredTestObj.objects.create()
+        self.fm = M2MTestObj.objects.create(value=1)
+        self.test_obj.m2m_items.add(self.fm)
+        self.test_obj = reload_model_instance(self.test_obj)
+
+    def test_nothing_has_changed_for_ignored_model(self):
+        self.assertEqual(self.test_obj.m2m_item_values_sum, 0)

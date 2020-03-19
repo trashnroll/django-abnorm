@@ -3,6 +3,7 @@ import types
 from functools import wraps, partial
 
 import django
+from django.conf import settings
 from django.db import models
 from django.db.models import Sum, Avg, Q
 from django.db.models.fields.files import FieldFile
@@ -110,6 +111,10 @@ class DenormalizedFieldMixin(object):
 
     def setup_signals(self, cls):
         if cls._meta.abstract:
+            return
+
+        if get_model_name(cls) in getattr(
+                settings, 'ABNORM_IGNORE_MODELS', []):
             return
 
         pre_save.connect(self.augmented_model_pre_save, cls)

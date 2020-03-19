@@ -128,3 +128,11 @@ class M2MTestObj(BaseModel):
 
     class Meta:
         ordering = ('id',)
+
+
+class IgnoredTestObj(BaseModel):
+    m2m_items = models.ManyToManyField('M2MTestObj')
+    m2m_item_values_sum = SumField('m2m_items', 'value')
+
+    class Meta:
+        ordering = ('id',)
