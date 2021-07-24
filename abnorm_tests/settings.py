@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'abnorm_tests.tests',
 )
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 MIDDLEWARE_CLASSES = ()
 

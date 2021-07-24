@@ -3,6 +3,9 @@ from django import VERSION as DJANGO_VERSION
 
 SUPPORTED_DJANGO_VERSIONS = [
     (2, 2),
+    (3, 0),
+    (3, 1),
+    (3, 2),
 ]
 
 if DJANGO_VERSION[:2] not in SUPPORTED_DJANGO_VERSIONS:
