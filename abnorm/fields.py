@@ -2,7 +2,6 @@ import types
 
 from functools import wraps, partial
 
-import django
 from django.conf import settings
 from django.db import models
 from django.db.models import Sum, Avg, Q
@@ -10,10 +9,9 @@ from django.db.models.fields.files import FieldFile
 from django.db.models.signals import (
     pre_save, post_save, post_delete, post_init, m2m_changed, Signal)
 from django.utils.functional import cached_property
-from django.utils import six
 from django.core.exceptions import ObjectDoesNotExist
 
-from .adapters import this_django, south
+from .adapters import this_django
 from .utils import get_model_name, dumps, loads
 from . import state
 
@@ -167,7 +165,7 @@ class DenormalizedFieldMixin(object):
             # local functions are garbage collected, so disable weak refs
             post_update.connect(receiver, sender=rel_model, weak=False)
 
-        if django.VERSION < (1, 9) or (is_frod or is_m2md):
+        if is_frod or is_m2md:
             # required for all descriptor types with django 1.6-1.8 for some
             # reason, and only for (is_frod or is_m2md) case with 1.9+
             self.connect_related_model_signals(rel_model)
@@ -262,7 +260,6 @@ class AggregateField(DenormalizedFieldMixin):
             relation_name=relation_name, default=default, **kwargs)
 
 
-@this_django.add_subfield_base_metaclass
 class CountField(AggregateField, models.IntegerField):
 
     def get_denormalized_value(self, instance=None, relation=None):
@@ -322,11 +319,9 @@ class GenericSumField(AnnotateField):
 class SumField(object):
     def __new__(cls, *args, **kwargs):
         internal_type = kwargs.pop('internal_type', models.IntegerField)
-        field_class = this_django.add_subfield_base_metaclass(
-            type(
-                'SumField', (GenericSumField, internal_type),
-                {'internal_type': internal_type}
-            )
+        field_class = type(
+            'SumField', (GenericSumField, internal_type),
+            {'internal_type': internal_type}
         )
         return field_class(*args, **kwargs)
 
@@ -343,16 +338,13 @@ class GenericAvgField(AnnotateField):
 class AvgField(object):
     def __new__(cls, *args, **kwargs):
         internal_type = kwargs.pop('internal_type', models.FloatField)
-        field_class = this_django.add_subfield_base_metaclass(
-            type(
-                'AvgField', (GenericAvgField, internal_type),
-                {'internal_type': internal_type}
-            )
+        field_class = type(
+            'AvgField', (GenericAvgField, internal_type),
+            {'internal_type': internal_type}
         )
         return field_class(*args, **kwargs)
 
 
-@this_django.add_subfield_base_metaclass
 class RelationField(DenormalizedFieldMixin, models.TextField):
 
     generate_reverse_relation = False
@@ -424,7 +416,7 @@ class RelationField(DenormalizedFieldMixin, models.TextField):
         descriptor = getattr(self.model, self.relation_name)
         model = this_django.get_descriptor_rel_model(descriptor)
 
-        if isinstance(value, six.string_types):
+        if isinstance(value, str):
             value = loads(value)
 
         if self.limit == 1 and self.flat:
@@ -447,7 +439,7 @@ class RelationField(DenormalizedFieldMixin, models.TextField):
             return value
         return self.serialize_value(value)
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         # a reverse of `get_prep_value` since django 1.8
         return self.to_python(value)
 
@@ -457,7 +449,7 @@ class RelationField(DenormalizedFieldMixin, models.TextField):
 
         if value is None:
             value = ''
-        elif not isinstance(value, six.string_types):
+        elif not isinstance(value, str):
             if self.limit == 1 and self.flat:
                 value = self.extract_item_fields(value)
             else:
@@ -465,6 +457,3 @@ class RelationField(DenormalizedFieldMixin, models.TextField):
             value = dumps(value)
 
         return value
-
-
-south.setup_rules()

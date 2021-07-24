@@ -1,7 +1,5 @@
 import gc
 
-from funcy import distinct, group_values
-
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils.decorators import method_decorator
@@ -45,10 +43,12 @@ class Command(BaseCommand):
 
     @method_decorator(transaction.atomic)
     def handle(self, *args, **options):
-        # django 1.6/1.7 takes cmd args as `args`, 1.8+ as `options`
-        # sum their values to support both ways
-        fields = distinct(list(args) + options.get('field', []))
-        groups = group_values(f.rsplit('.', 1) for f in fields)
+        fields = options.get('field', [])
+        groups = {}
+        for f in fields:
+            model_name, field_name = f.rsplit('.', 1)
+            groups.setdefault(model_name, []).append(field_name)
+
         for model_name, field_names in groups.items():
             self.migrate_fields(model_name, field_names)
 

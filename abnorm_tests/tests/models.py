@@ -1,13 +1,8 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django import VERSION as DJANGO_VERSION
+from django.contrib.contenttypes import fields
 
 from abnorm import SumField, CountField, RelationField
-
-if DJANGO_VERSION < (1, 8):
-    from django.contrib.contenttypes import generic
-else:
-    from django.contrib.contenttypes import fields as generic
 
 
 class BaseModel(models.Model):
@@ -16,9 +11,6 @@ class BaseModel(models.Model):
 
     def __str__(self):
         return '{} #{}'.format(self.__class__.__name__, self.pk)
-
-    # Py2 compatibility
-    __unicode__ = __str__
 
 
 class TestParentObj(BaseModel):
@@ -54,7 +46,7 @@ class TestObj(BaseModel):
     nrto_first_2_items = RelationField(
         'nrto_items', fields=('id', 'value'), limit=2)
 
-    grto_items = generic.GenericRelation('GenericRelatedTestObj')
+    grto_items = fields.GenericRelation('GenericRelatedTestObj')
     grto_item_values_sum = SumField('grto_items', 'value')
     grto_items_count = CountField('grto_items')
     grto_first_item = RelationField(
@@ -114,7 +106,7 @@ class GenericRelatedTestObj(BaseModel):
     value = models.IntegerField(default=0)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = fields.GenericForeignKey('content_type', 'object_id')
     m2m_items = models.ManyToManyField('M2MTestObj')
     m2m_first_item = RelationField(
         'm2m_items', fields=('id', 'value'), limit=1, flat=True)

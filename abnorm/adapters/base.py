@@ -3,10 +3,8 @@ def _patch_descriptor_backwards_relation(descriptor):
     # we need to patch backwards relation for nullable fields to override
     # related_manager_cls.remove and related_manager_cls.clear methods
     # since they are using update orm technique w/o having any signal
-    # see django.db.models.fields.related.ForeignRelatedObjectsDescriptor
-    # (django 1.6-1.8) or
+    # for more information see related_manager_cls property of
     # django.db.models.fields.related_descriptors.ReverseManyToOneDescriptor
-    # (django 1.9+) related_manager_cls property for details
 
     _remove_orig = descriptor.related_manager_cls.remove
     _clear_orig = descriptor.related_manager_cls.clear

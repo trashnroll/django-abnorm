@@ -1,5 +1,3 @@
-from unittest import skipIf, skipUnless
-import django
 from django.test import TestCase
 
 from .models import (
@@ -280,20 +278,7 @@ class RTOCountDenormalizationTestCase(TestCase):
         self.test_obj = reload_model_instance(self.test_obj)
         self.assertEqual(self.test_obj.rto_items_count, 4)
 
-    @skipIf(django.VERSION >= (1, 9), 'django<1.9 feature')
-    def test_updated_after_adding_pre_19(self):
-        self.test_obj.rto_items.create(value=0)
-        self.test_obj.rto_items.create(value=0)
-
-        self.test_obj.rto_items.add(
-            RelatedTestObj(value=0)
-        )
-
-        self.test_obj = reload_model_instance(self.test_obj)
-        self.assertEqual(self.test_obj.rto_items_count, 3)
-
-    @skipUnless(django.VERSION >= (1, 9), 'django1.9+ feature')
-    def test_updated_after_adding_since_19(self):
+    def test_updated_after_adding(self):
         self.test_obj.rto_items.create(value=0)
         self.test_obj.rto_items.create(value=0)
 
