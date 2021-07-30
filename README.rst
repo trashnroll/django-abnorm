@@ -1,9 +1,9 @@
 django-abnorm
 =============
 
-.. image:: https://travis-ci.org/trashnroll/django-abnorm.svg?branch=master
+.. image:: https://github.com/trashnroll/django-abnorm/actions/workflows/test.yml/badge.svg?branch=master
+    :target: https://github.com/trashnroll/django-abnorm/actions?workflow=test
     :alt: Build Status
-    :target: https://travis-ci.org/trashnroll/django-abnorm
 
 Abnorm is a django denormalization toolkit.
 
