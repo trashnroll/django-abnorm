@@ -162,8 +162,13 @@ class DenormalizedFieldMixin(object):
             # for details
             receiver = self.get_post_update_receiver(related_field_name)
 
+            post_update_model = rel_model
+            if (isinstance(descriptor, this_django.ManyToManyDescriptor) and
+                    not descriptor.reverse):
+                post_update_model = self.model
+
             # local functions are garbage collected, so disable weak refs
-            post_update.connect(receiver, sender=rel_model, weak=False)
+            post_update.connect(receiver, sender=post_update_model, weak=False)
 
         if is_frod or is_m2md:
             # required for all descriptor types with django 1.6-1.8 for some
