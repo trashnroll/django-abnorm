@@ -41,7 +41,10 @@ class SpecificDjango(EveryDjango):
 
     def get_descriptor_rel_model(self, descriptor):
         if isinstance(descriptor, self.ManyToManyDescriptor):
-            return descriptor.field.related_model
+            if descriptor.reverse:
+                return descriptor.field.model
+            else:
+                return descriptor.field.related_model
         elif isinstance(
                 descriptor, self.ReverseGenericRelatedObjectsDescriptor):
             return descriptor.field.remote_field.model
@@ -118,7 +121,10 @@ class SpecificDjango(EveryDjango):
         if isinstance(rf, ForeignKey):
             return rf.name
         elif isinstance(rf, ManyToManyField):
-            return rf.remote_field.get_accessor_name()
+            if descriptor.reverse:
+                return rf.attname
+            else:
+                return rf.remote_field.get_accessor_name()
         elif isinstance(rf, GenericRelation):
             return [
                 f for f in self.get_model_fields(

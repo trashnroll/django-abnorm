@@ -19,6 +19,13 @@ class DjangoAdapterTestCase(TestCase):
             M2MTestObj
         )
 
+        # the same with reverse descriptor
+        self.assertEqual(
+            this_django.get_descriptor_rel_model(
+                M2MTestObj.testobj_set),
+            TestObj
+        )
+
         # ReverseGenericRelatedObjectsDescriptor case
         self.assertEqual(
             this_django.get_descriptor_rel_model(TestObj.grto_items),
@@ -37,6 +44,13 @@ class DjangoAdapterTestCase(TestCase):
             this_django.get_descriptor_remote_field(
                 TestObj.m2m_items),
             M2MTestObj.testobj_set.field
+        )
+
+        # the same with reverse descriptor
+        self.assertEqual(
+            this_django.get_descriptor_remote_field(
+                M2MTestObj.testobj_set),
+            TestObj.m2m_items.field
         )
 
         # ReverseGenericRelatedObjectsDescriptor case

@@ -117,6 +117,7 @@ class GenericRelatedTestObj(BaseModel):
 
 class M2MTestObj(BaseModel):
     value = models.IntegerField(default=0)
+    testobj_items_count = CountField('testobj_set')
 
     class Meta:
         ordering = ('id',)
