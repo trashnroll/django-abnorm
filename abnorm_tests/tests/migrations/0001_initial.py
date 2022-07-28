@@ -18,6 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('value', models.IntegerField(default=0)),
+                ('testobj_items_count', abnorm.fields.CountField(blank=True, default=0, null=True, relation_name='testobj_set')),
             ],
             options={
                 'ordering': ('id',),
