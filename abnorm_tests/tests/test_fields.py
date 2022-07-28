@@ -170,6 +170,17 @@ class M2MRelationTestCase(TestCase):
                          [self.fm0, self.fm1])
 
 
+class M2MReverseRelationTestCase(TestCase):
+    def setUp(self):
+        self.test_obj = TestObj.objects.create()
+        self.m2mobj = M2MTestObj.objects.create(value=0)
+
+    def test_m2m_reverse_descriptor_triggers_update(self):
+        self.m2mobj.testobj_set.add(self.test_obj)
+        self.m2mobj = reload_model_instance(self.m2mobj)
+        self.assertEqual(self.m2mobj.testobj_items_count, 1)
+
+
 class PostUpdateTestCase(TestCase):
     def setUp(self):
         self.test_grand_parent = TestParentObj.objects.create()
