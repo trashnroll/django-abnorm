@@ -18,7 +18,7 @@ DEPENDENCY_LINKS = [
 
 setup(
     name='django-abnorm',
-    version='1.1.0',
+    version='1.2.0',
     description='Django automatic denormalization toolkit',
     author='trashnroll',
     author_email='trashnroll@gmail.com',
