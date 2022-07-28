@@ -30,3 +30,24 @@ class DjangoAdapterTestCase(TestCase):
             this_django.get_descriptor_rel_model(TestObj.non_ordereds),
             NonOrderedModel
         )
+
+    def test_get_descriptor_remote_field(self):
+        # ManyToManyDescriptor case
+        self.assertEqual(
+            this_django.get_descriptor_remote_field(
+                TestObj.m2m_items),
+            M2MTestObj.testobj_set.field
+        )
+
+        # ReverseGenericRelatedObjectsDescriptor case
+        self.assertEqual(
+            this_django.get_descriptor_remote_field(
+                TestObj.m2m_items),
+            M2MTestObj.testobj_set.field
+        )
+
+        # ForeignRelatedObjectsDescriptor case
+        self.assertEqual(
+            this_django.get_descriptor_remote_field(TestObj.non_ordereds),
+            NonOrderedModel.test_obj.field
+        )
