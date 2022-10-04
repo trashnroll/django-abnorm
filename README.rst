@@ -69,7 +69,7 @@ Abnorm automatically creates and connects signal receivers with boring logic und
 
 The only requirement for the augmented model (the one with abnorm field added to hold denormalized value) is to have a standard django relation descriptor, as it is internally used to reach the desired data source. You can use, for example, standard backwards relation accessors, that are auto-created for relationship fields.
 
-Abnorm currently supports django 2.2-3.2 and recent versions of python3.
+Abnorm currently supports django 2.2-4.0 and recent versions of python3.
 
 Work on documentation and tests is in progress, any help would be appreciated.
 
