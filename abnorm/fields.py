@@ -16,7 +16,7 @@ from .utils import get_model_name, dumps, loads
 from . import state
 
 
-post_update = Signal(providing_args=['instance'])
+post_update = Signal()
 
 
 def skippable(func):
