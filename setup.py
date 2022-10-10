@@ -6,7 +6,7 @@ README = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.rst')
 
 
 DEPENDENCIES = [
-    'django >=2.2, <3.3',
+    'django >=2.2, <4.1',
 ]
 
 
@@ -18,7 +18,7 @@ DEPENDENCY_LINKS = [
 
 setup(
     name='django-abnorm',
-    version='1.2.0',
+    version='1.3.0',
     description='Django automatic denormalization toolkit',
     author='trashnroll',
     author_email='trashnroll@gmail.com',
@@ -41,6 +41,7 @@ setup(
         'Framework :: Django :: 3.0',
         'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.0',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
