@@ -6,7 +6,7 @@ README = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.rst')
 
 
 DEPENDENCIES = [
-    'django >=2.2, <4.1',
+    'django >=2.2, <4.3',
 ]
 
 
@@ -18,7 +18,7 @@ DEPENDENCY_LINKS = [
 
 setup(
     name='django-abnorm',
-    version='1.3.0',
+    version='1.4.0',
     description='Django automatic denormalization toolkit',
     author='trashnroll',
     author_email='trashnroll@gmail.com',
@@ -29,11 +29,11 @@ setup(
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Framework :: Django',
@@ -42,6 +42,8 @@ setup(
         'Framework :: Django :: 3.1',
         'Framework :: Django :: 3.2',
         'Framework :: Django :: 4.0',
+        'Framework :: Django :: 4.1',
+        'Framework :: Django :: 4.2',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
