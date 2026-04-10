@@ -9,6 +9,9 @@ SUPPORTED_DJANGO_VERSIONS = [
     (4, 0),
     (4, 1),
     (4, 2),
+    (5, 0),
+    (5, 1),
+    (5, 2),
 ]
 
 if DJANGO_VERSION[:2] not in SUPPORTED_DJANGO_VERSIONS:
